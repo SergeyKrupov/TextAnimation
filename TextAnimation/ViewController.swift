@@ -42,65 +42,73 @@ final class GlyphLayer: CALayer {
     }
 }
 
+func createGlyphLayers(text: String, font: CTFont) -> [GlyphLayer] {
+    let string = NSAttributedString(string: text, attributes: [.font: font])
+    let line = CTLineCreateWithAttributedString(string)
+    let runs = CTLineGetGlyphRuns(line) as! [CTRun]
+
+    var layers: [GlyphLayer] = []
+
+    for run in runs {
+        let glyphsCount = CTRunGetGlyphCount(run)
+        let attributes = CTRunGetAttributes(run) as! [String: Any]
+        let font = attributes[kCTFontAttributeName as String] as! CTFont
+
+        for index in 0 ..< glyphsCount {
+            let range = CFRangeMake(index, 1)
+            var glyph = CGGlyph()
+            withUnsafeMutablePointer(to: &glyph) { pointer in
+                CTRunGetGlyphs(run, range, pointer)
+            }
+
+            var position = CGPoint()
+            withUnsafeMutablePointer(to: &position) { pointer in
+                CTRunGetPositions(run, range, pointer)
+            }
+
+            var rect = CGRect.zero
+            _ = withUnsafeMutablePointer(to: &rect) { ptrRect in
+                withUnsafePointer(to: &glyph) { ptrGlyph in
+                    CTFontGetBoundingRectsForGlyphs(font, .horizontal, ptrGlyph, ptrRect, 1)
+                }
+            }
+
+            let layer = GlyphLayer(glyph: glyph, font: font, offset: CGPoint(x: ceil(-rect.origin.x), y: ceil(-rect.origin.y)))
+            layer.frame = CGRect(x: rect.minX + position.x, y: rect.minY + position.y + 100, width: ceil(rect.width), height: ceil(rect.height))
+            layers.append(layer)
+        }
+    }
+
+    return layers
+}
+
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
         let text = "Foo-Bar😃dd"
         let font = CTFontCreateWithName("Helvetica-Bold" as CFString, 50, nil)
-        let string = NSAttributedString(string: text, attributes: [.font: font])
 
-        let line = CTLineCreateWithAttributedString(string)
-        let runs = CTLineGetGlyphRuns(line) as! [CTRun]
+        let layers = createGlyphLayers(text: text, font: font)
 
-        var textIndex = text.startIndex
+        var rect = layers.first?.frame ?? .zero
+        for layer in layers {
+            rect = rect.union(layer.frame)
+        }
 
-        for run in runs {
-            let glyphsCount = CTRunGetGlyphCount(run)
-            let attributes = CTRunGetAttributes(run) as! [String: Any]
-            let font = attributes[kCTFontAttributeName as String] as! CTFont
+        let position = CGPoint(x: (view.bounds.width - rect.width) / 2, y: (view.bounds.height - rect.height) / 2)
 
-            for index in 0 ..< glyphsCount {
-                let range = CFRangeMake(index, 1)
-                var glyph = CGGlyph()
-                withUnsafeMutablePointer(to: &glyph) { pointer in
-                    CTRunGetGlyphs(run, range, pointer)
-                }
-
-                var position = CGPoint()
-                withUnsafeMutablePointer(to: &position) { pointer in
-                    CTRunGetPositions(run, range, pointer)
-                }
-
-                //let letter = CTFontCreatePathForGlyph(ctFont, glyph, nil)
-                var rect = CGRect.zero
-                withUnsafeMutablePointer(to: &rect) { ptrRect in
-                    withUnsafePointer(to: &glyph) { ptrGlyph in
-                        CTFontGetBoundingRectsForGlyphs(font, .horizontal, ptrGlyph, ptrRect, 1)
-                    }
-                }
-
-//                let shapeLayer = CAShapeLayer()r
-//                shapeLayer.path = CTFontCreatePathForGlyph(font, glyph, nil)
-//                shapeLayer.frame = rect.offsetBy(dx: position.x, dy: position.y + 500)
-//                view.layer.addSublayer(shapeLayer)
-
-                let glyphLayer = GlyphLayer(glyph: glyph, font: font, offset: CGPoint(x: ceil(-rect.origin.x), y: ceil(-rect.origin.y)))
-                glyphLayer.frame = CGRect(x: rect.minX + position.x, y: rect.minY + position.y + 100, width: ceil(rect.width), height: ceil(rect.height))
-                view.layer.addSublayer(glyphLayer)
-
-                print("\(rect) -> \(position)")
-                let textLayer = CATextLayer()
-                textLayer.foregroundColor = UIColor.red.cgColor
-                textLayer.backgroundColor = UIColor.blue.cgColor
-                textLayer.string = String(text[textIndex])
-                textLayer.font = font
-                textIndex = text.index(after: textIndex)
-                textLayer.frame = rect.offsetBy(dx: position.x, dy: position.y + 300)
-                view.layer.addSublayer(textLayer)
-            }
+        for layer in layers {
+            let frame = layer.frame
+            layer.frame = CGRect(x: position.x + frame.minX, y: position.y + rect.height - frame.height, width: frame.width, height: frame.height)
+            view.layer.addSublayer(layer)
         }
 
     }
