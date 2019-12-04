@@ -85,6 +85,13 @@ func createGlyphLayers(text: String, font: CTFont) -> [GlyphLayer] {
 
 class ViewController: UIViewController {
 
+    @IBAction func start(_ sender: Any) {
+        let layers = view.layer.sublayers?.compactMap { $0 as? GlyphLayer } ?? []
+        for layer in layers {
+            animate1(layer: layer)
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -117,13 +124,13 @@ class ViewController: UIViewController {
             view.layer.addSublayer(layer)
         }
 
-        for layer in layers {
-            animate1(layer: layer)
-        }
+//        for layer in layers {
+//            animate1(layer: layer)
+//        }
     }
 
     private func animate1(layer: CALayer) {
-        let group = CAAnimationGroup()
+
 
         let duration: CFTimeInterval = 3
 
@@ -147,7 +154,15 @@ class ViewController: UIViewController {
         animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animateScale.duration = duration
 
-        group.animations = [animateScale, animatePosition]
+        let animateSpring = CASpringAnimation(keyPath: "position")
+        animateSpring.fromValue = position
+        animateSpring.toValue = CGPoint(x: position.x, y: position.y + 50)
+        animateSpring.mass = 1
+        animateSpring.damping = 20
+        animateSpring.duration = duration
+
+        let group = CAAnimationGroup()
+        group.animations = [animateSpring] //[animateScale, animatePosition]
         group.duration = duration
 
         layer.add(group, forKey: "animate1")
