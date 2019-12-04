@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A54A6E9C2397D61E0002E62B /* GlyphLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A6E9B2397D61E0002E62B /* GlyphLayer.swift */; };
+		A54A6EA02397D9720002E62B /* AnimatedStringLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A6E9F2397D9720002E62B /* AnimatedStringLayer.swift */; };
+		A54A6EA22397DFC60002E62B /* BouncePositionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */; };
 		A565D41F2396AEE8001F7BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565D41E2396AEE8001F7BFE /* AppDelegate.swift */; };
 		A565D4212396AEE8001F7BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565D4202396AEE8001F7BFE /* ViewController.swift */; };
 		A565D4242396AEE8001F7BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A565D4222396AEE8001F7BFE /* Main.storyboard */; };
@@ -26,6 +29,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A54A6E9B2397D61E0002E62B /* GlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlyphLayer.swift; sourceTree = "<group>"; };
+		A54A6E9F2397D9720002E62B /* AnimatedStringLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedStringLayer.swift; sourceTree = "<group>"; };
+		A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BouncePositionAnimation.swift; sourceTree = "<group>"; };
 		A565D41B2396AEE8001F7BFE /* TextAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A565D41E2396AEE8001F7BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A565D4202396AEE8001F7BFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +62,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A54A6E992397D6020002E62B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A54A6E9B2397D61E0002E62B /* GlyphLayer.swift */,
+				A54A6E9F2397D9720002E62B /* AnimatedStringLayer.swift */,
+				A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		A565D4122396AEE8001F7BFE = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +93,7 @@
 		A565D41D2396AEE8001F7BFE /* TextAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				A54A6E992397D6020002E62B /* Classes */,
 				A565D41E2396AEE8001F7BFE /* AppDelegate.swift */,
 				A565D4202396AEE8001F7BFE /* ViewController.swift */,
 				A565D4222396AEE8001F7BFE /* Main.storyboard */,
@@ -197,8 +214,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A54A6EA22397DFC60002E62B /* BouncePositionAnimation.swift in Sources */,
+				A54A6E9C2397D61E0002E62B /* GlyphLayer.swift in Sources */,
 				A565D4212396AEE8001F7BFE /* ViewController.swift in Sources */,
 				A565D41F2396AEE8001F7BFE /* AppDelegate.swift in Sources */,
+				A54A6EA02397D9720002E62B /* AnimatedStringLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

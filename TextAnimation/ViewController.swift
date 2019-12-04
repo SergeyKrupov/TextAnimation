@@ -9,38 +9,7 @@
 import UIKit
 import CoreText
 
-final class GlyphLayer: CALayer {
 
-    internal init(glyph: CGGlyph, font: CTFont, offset: CGPoint) {
-        self.glyph = glyph
-        self.font = font
-        self.offset = offset
-        super.init()
-
-        masksToBounds = false
-        setNeedsDisplay()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    let glyph: CGGlyph
-    let font: CTFont
-    let offset: CGPoint
-
-    override func draw(in ctx: CGContext) {
-        ctx.translateBy(x: 0, y: bounds.height)
-        ctx.scaleBy(x: 1.0, y: -1.0)
-        var mutableGlyph = glyph
-        var position = offset
-        withUnsafePointer(to: &mutableGlyph) { ptrGlyph in
-            withUnsafePointer(to: &position) { ptrPosition in
-                CTFontDrawGlyphs(font, ptrGlyph, ptrPosition, 1, ctx)
-            }
-        }
-    }
-}
 
 func createGlyphLayers(text: String, font: CTFont) -> [GlyphLayer] {
     let string = NSAttributedString(string: text, attributes: [.font: font])
@@ -94,11 +63,19 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let layer = AnimatedStringLayer()
+        layer.text = "Blah-blah-blah😎"
+        view.layer.addSublayer(layer)
+
+        layer.frame.origin = CGPoint(x: 100, y: 100)
         // Do any additional setup after loading the view.
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+
 
         let text = "Foo-Bar😃dd"
         let font = CTFontCreateWithName("Helvetica-Bold" as CFString, 50, nil)
@@ -156,7 +133,7 @@ class ViewController: UIViewController {
         let duration2: CFTimeInterval = 2
         let animateSpring = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + 50))
         animateSpring.duration = duration2
-        animateSpring.beginTime   = duration1 + CFTimeInterval(index) * 0.1
+        animateSpring.beginTime   = duration1 + CFTimeInterval(index) * 0.05
 
         let group = CAAnimationGroup()
         group.animations = [animateScale, animatePosition, animateSpring]
@@ -166,59 +143,4 @@ class ViewController: UIViewController {
     }
 }
 
-final class BouncePositionAnimation: CAKeyframeAnimation {
 
-    init(fromValue: CGPoint, toValue: CGPoint) {
-        self.fromValue = fromValue
-        self.toValue = toValue
-        super.init()
-        keyPath = "position"
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private let fromValue: CGPoint
-    private let toValue: CGPoint
-
-    override var values: [Any]? {
-        get {
-            let duration = self.duration
-            var values: [Any] = []
-
-            let count = Int(duration * 60)
-            for index in 0 ... count {
-                values.append(evaluate(moment: CFTimeInterval(index) / 60.0, duration: duration))
-            }
-
-            return values
-        }
-        set {
-        }
-    }
-
-    func evaluate(moment: CFTimeInterval, duration: CFTimeInterval) -> CGPoint {
-        let fraction = easeOutBounce(moment / duration)
-        return CGPoint(
-            x: Double(fromValue.x) + Double(toValue.x - fromValue.x) * fraction,
-            y: Double(fromValue.y) + Double(toValue.y - fromValue.y) * fraction
-        )
-    }
-
-    func easeOutBounce(_ t: Double) -> Double {
-        if (t < 4.0 / 11.0) {
-            return pow(11.0 / 4.0, 2) * pow(t, 2);
-        }
-
-        if (t < 8.0 / 11.0) {
-            return 3.0 / 4.0 + pow(11.0 / 4.0, 2) * pow(t - 6.0 / 11.0, 2);
-        }
-
-        if (t < 10.0 / 11.0) {
-            return 15.0 / 16.0 + pow(11.0 / 4.0, 2) * pow(t - 9.0 / 11.0, 2);
-        }
-
-        return 63.0 / 64.0 + pow(11.0 / 4.0, 2) * pow(t - 21.0 / 22.0, 2);
-    }
-}
