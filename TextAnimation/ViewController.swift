@@ -154,11 +154,7 @@ class ViewController: UIViewController {
         animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animateScale.duration = duration
 
-        let animateSpring = CASpringAnimation(keyPath: "position")
-        animateSpring.fromValue = position
-        animateSpring.toValue = CGPoint(x: position.x, y: position.y + 50)
-        animateSpring.mass = 1
-        animateSpring.damping = 20
+        let animateSpring = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + 50))
         animateSpring.duration = duration
 
         let group = CAAnimationGroup()
@@ -169,3 +165,59 @@ class ViewController: UIViewController {
     }
 }
 
+final class BouncePositionAnimation: CAKeyframeAnimation {
+
+    init(fromValue: CGPoint, toValue: CGPoint) {
+        self.fromValue = fromValue
+        self.toValue = toValue
+        super.init()
+        keyPath = "position"
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private let fromValue: CGPoint
+    private let toValue: CGPoint
+
+    override var values: [Any]? {
+        get {
+            let duration = self.duration
+            var values: [Any] = []
+
+            let count = Int(duration * 60)
+            for index in 0 ... count {
+                values.append(evaluate(moment: CFTimeInterval(index) / 60.0, duration: duration))
+            }
+
+            return values
+        }
+        set {
+        }
+    }
+
+    func evaluate(moment: CFTimeInterval, duration: CFTimeInterval) -> CGPoint {
+        let fraction = easeOutBounce(moment / duration)
+        return CGPoint(
+            x: Double(fromValue.x) + Double(toValue.x - fromValue.x) * fraction,
+            y: Double(fromValue.y) + Double(toValue.y - fromValue.y) * fraction
+        )
+    }
+
+    func easeOutBounce(_ t: Double) -> Double {
+        if (t < 4.0 / 11.0) {
+            return pow(11.0 / 4.0, 2) * pow(t, 2);
+        }
+
+        if (t < 8.0 / 11.0) {
+            return 3.0 / 4.0 + pow(11.0 / 4.0, 2) * pow(t - 6.0 / 11.0, 2);
+        }
+
+        if (t < 10.0 / 11.0) {
+            return 15.0 / 16.0 + pow(11.0 / 4.0, 2) * pow(t - 9.0 / 11.0, 2);
+        }
+
+        return 63.0 / 64.0 + pow(11.0 / 4.0, 2) * pow(t - 21.0 / 22.0, 2);
+    }
+}
