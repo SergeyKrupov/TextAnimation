@@ -127,19 +127,19 @@ class ViewController: UIViewController {
 
         let duration: CFTimeInterval = 3
 
-        let radius: CGFloat = 100
+        let radius: CGFloat = CGFloat.random(in: 50 ... 200)
         let position = layer.position
         let path = CGMutablePath()
-        path.move(to: CGPoint(x: position.x - radius, y: position.y))
-        path.addLine(to: position)
+        path.addRelativeArc(center: CGPoint(x: position.x - radius, y: position.y), radius: radius, startAngle: .pi, delta: -CGFloat.pi)
 
         let animatePosition = CAKeyframeAnimation(keyPath: "position")
         animatePosition.path = path
         animatePosition.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animatePosition.duration = duration
+        animatePosition.rotationMode = .rotateAuto
 
         let fromScale = CATransform3DMakeScale(0, 0, 1)
-        let toScale = CATransform3DIdentity
+        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1) //CATransform3DIdentity
 
         let animateScale = CABasicAnimation(keyPath: "transform")
         animateScale.fromValue = fromScale
