@@ -8,18 +8,37 @@
 
 import UIKit
 
-final class PreviewViewController: UIViewController {
+protocol PreviewViewControllerProtocol {
 
+    func setText(_ text: String?)
+}
+
+final class PreviewViewController: UIViewController, PreviewViewControllerProtocol {
+
+    // MARK: - Outlets
     @IBOutlet private var animatedStringView: AnimatedStringView!
 
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         animatedStringView.text = "Foo-Bar"
         animatedStringView.addGestureRecognizer(doubleTapRecognizer)
     }
-    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.description as? EditorViewControllerProtocol {
+            destination.setText(animatedStringView.text)
+        }
+    }
+
+    // MARK: - Action
     @IBAction func previewClickAction(_ sender: Any) {
         animatedStringView.animate()
+    }
+
+    // MARK: - PreviewViewControllerProtocol
+    func setText(_ text: String?) {
+        animatedStringView.text = text
     }
 
     // MARK: - Private
@@ -37,15 +56,4 @@ final class PreviewViewController: UIViewController {
         }
         performSegue(withIdentifier: "PresentEditor", sender: self)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -76,10 +76,25 @@
                     <view key="view" contentMode="scaleToFill" id="9fZ-x8-59C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0h7-ZQ-5MQ">
+                                <rect key="frame" x="8" y="113" width="398" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="PXx-gd-tAP" firstAttribute="trailing" secondItem="0h7-ZQ-5MQ" secondAttribute="trailing" constant="8" id="3F8-PK-4Us"/>
+                            <constraint firstItem="0h7-ZQ-5MQ" firstAttribute="top" secondItem="PXx-gd-tAP" secondAttribute="top" constant="25" id="NJh-w9-AmQ"/>
+                            <constraint firstItem="0h7-ZQ-5MQ" firstAttribute="leading" secondItem="PXx-gd-tAP" secondAttribute="leading" constant="8" id="P1Z-x9-8pR"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="PXx-gd-tAP"/>
                     </view>
                     <navigationItem key="navigationItem" id="4D2-di-mF1"/>
+                    <connections>
+                        <outlet property="textField" destination="0h7-ZQ-5MQ" id="VGV-OQ-QJn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuH-vB-860" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

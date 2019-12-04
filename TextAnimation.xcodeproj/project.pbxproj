@@ -100,15 +100,13 @@
 		A565D41D2396AEE8001F7BFE /* TextAnimation */ = {
 			isa = PBXGroup;
 			children = (
+				A57D82AF2398103B00832851 /* ViewControllers */,
 				A54A6E992397D6020002E62B /* Classes */,
 				A565D41E2396AEE8001F7BFE /* AppDelegate.swift */,
 				A565D4202396AEE8001F7BFE /* ViewController.swift */,
-				A565D4222396AEE8001F7BFE /* Main.storyboard */,
 				A565D4252396AEE9001F7BFE /* Assets.xcassets */,
 				A565D4272396AEE9001F7BFE /* LaunchScreen.storyboard */,
 				A565D42A2396AEE9001F7BFE /* Info.plist */,
-				A57D82A923980B5A00832851 /* PreviewViewController.swift */,
-				A57D82AD23980EE600832851 /* EditViewController.swift */,
 			);
 			path = TextAnimation;
 			sourceTree = "<group>";
@@ -120,6 +118,16 @@
 				A565D4352396AEE9001F7BFE /* Info.plist */,
 			);
 			path = TextAnimationTests;
+			sourceTree = "<group>";
+		};
+		A57D82AF2398103B00832851 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A565D4222396AEE8001F7BFE /* Main.storyboard */,
+				A57D82A923980B5A00832851 /* PreviewViewController.swift */,
+				A57D82AD23980EE600832851 /* EditViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
