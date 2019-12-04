@@ -16,6 +16,8 @@
 		A565D4262396AEE9001F7BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A565D4252396AEE9001F7BFE /* Assets.xcassets */; };
 		A565D4292396AEE9001F7BFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A565D4272396AEE9001F7BFE /* LaunchScreen.storyboard */; };
 		A565D4342396AEE9001F7BFE /* TextAnimationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565D4332396AEE9001F7BFE /* TextAnimationTests.swift */; };
+		A57D82AA23980B5A00832851 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D82A923980B5A00832851 /* PreviewViewController.swift */; };
+		A57D82AC23980BCC00832851 /* AnimatedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57D82AB23980BCC00832851 /* AnimatedStringView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		A565D42F2396AEE9001F7BFE /* TextAnimationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TextAnimationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A565D4332396AEE9001F7BFE /* TextAnimationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnimationTests.swift; sourceTree = "<group>"; };
 		A565D4352396AEE9001F7BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A57D82A923980B5A00832851 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		A57D82AB23980BCC00832851 /* AnimatedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedStringView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +72,7 @@
 				A54A6E9B2397D61E0002E62B /* GlyphLayer.swift */,
 				A54A6E9F2397D9720002E62B /* AnimatedStringLayer.swift */,
 				A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */,
+				A57D82AB23980BCC00832851 /* AnimatedStringView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -100,6 +105,7 @@
 				A565D4252396AEE9001F7BFE /* Assets.xcassets */,
 				A565D4272396AEE9001F7BFE /* LaunchScreen.storyboard */,
 				A565D42A2396AEE9001F7BFE /* Info.plist */,
+				A57D82A923980B5A00832851 /* PreviewViewController.swift */,
 			);
 			path = TextAnimation;
 			sourceTree = "<group>";
@@ -219,6 +225,8 @@
 				A565D4212396AEE8001F7BFE /* ViewController.swift in Sources */,
 				A565D41F2396AEE8001F7BFE /* AppDelegate.swift in Sources */,
 				A54A6EA02397D9720002E62B /* AnimatedStringLayer.swift in Sources */,
+				A57D82AC23980BCC00832851 /* AnimatedStringView.swift in Sources */,
+				A57D82AA23980B5A00832851 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
