@@ -9,8 +9,6 @@
 import UIKit
 import CoreText
 
-
-
 func createGlyphLayers(text: String, font: CTFont) -> [GlyphLayer] {
     let string = NSAttributedString(string: text, attributes: [.font: font])
     let line = CTLineCreateWithAttributedString(string)

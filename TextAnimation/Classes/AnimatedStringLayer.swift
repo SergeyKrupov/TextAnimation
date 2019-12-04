@@ -23,22 +23,17 @@ final class AnimatedStringLayer: CALayer {
     }
 
     func animate() {
-        for (offset, glyph) in glyphs.enumerated() {
-            animateLayer(layer: glyph.layer, index: offset)
+        for (offset, layer) in glyphs.reversed().enumerated() {
+            animateLayer(layer: layer, index: offset)
         }
     }
 
     // MARK: - Private
-    private struct Glyph {
-        let layer: GlyphLayer
-        let frame: CGRect
-    }
-
-    private var glyphs: [Glyph] = []
+    private var glyphs: [CALayer] = []
 
     private func rebuildSublayers() {
         glyphs.forEach {
-            $0.layer.removeFromSuperlayer()
+            $0.removeFromSuperlayer()
         }
         glyphs = []
 
@@ -87,7 +82,7 @@ final class AnimatedStringLayer: CALayer {
             let frame = layer.frame
             layer.frame = CGRect(x: frame.minX, y: boundingRect.maxY - frame.height, width: frame.width, height: frame.height)
             addSublayer(layer)
-            glyphs.append(Glyph(layer: layer, frame: layer.frame))
+            glyphs.append(layer)
         }
         bounds.size = boundingRect.size
     }
