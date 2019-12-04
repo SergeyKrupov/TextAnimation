@@ -97,6 +97,12 @@ class ViewController: UIViewController {
         let font = CTFontCreateWithName("Helvetica-Bold" as CFString, 50, nil)
 
         let layers = createGlyphLayers(text: text, font: font)
+//        let layers: [CALayer] = glyphLayers.map {
+//            let layer = CALayer()
+//            layer.frame = $0.frame
+//            layer.backgroundColor = UIColor.red.cgColor
+//            return layer
+//        }
 
         var rect = layers.first?.frame ?? .zero
         for layer in layers {
@@ -119,23 +125,30 @@ class ViewController: UIViewController {
     private func animate1(layer: CALayer) {
         let group = CAAnimationGroup()
 
-        let fromRotation = CATransform3DMakeRotation(CGFloat.pi / 3, 0, 0, 1)
-        let toRotation = CATransform3DMakeRotation(0, 0, 0, 1)
-        let rotate = CABasicAnimation(keyPath: "transform")
-        rotate.fromValue = fromRotation
-        rotate.toValue = toRotation
-        rotate.duration = 1.0
+        let duration: CFTimeInterval = 3
+
+        let radius: CGFloat = 100
+        let position = layer.position
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: position.x - radius, y: position.y))
+        path.addLine(to: position)
+
+        let animatePosition = CAKeyframeAnimation(keyPath: "position")
+        animatePosition.path = path
+        animatePosition.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animatePosition.duration = duration
 
         let fromScale = CATransform3DMakeScale(0, 0, 1)
-        let toScale = CATransform3DMakeScale(1, 1, 1)
+        let toScale = CATransform3DIdentity
 
-        let scale = CABasicAnimation(keyPath: "transform")
-        scale.fromValue = fromScale
-        scale.toValue = toScale
-        scale.duration = 1.0
+        let animateScale = CABasicAnimation(keyPath: "transform")
+        animateScale.fromValue = fromScale
+        animateScale.toValue = toScale
+        animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animateScale.duration = duration
 
-        group.animations = [scale, rotate]
-        group.duration = 5
+        group.animations = [animateScale, animatePosition]
+        group.duration = duration
 
         layer.add(group, forKey: "animate1")
     }
