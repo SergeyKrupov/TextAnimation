@@ -28,6 +28,15 @@ final class AnimatedStringLayer: CALayer {
         }
     }
 
+    /// Время анимации появления букв
+    var appearDuration: CFTimeInterval = 2
+
+    /// Время анимации колебания букв
+    var bounceDuration: CFTimeInterval = 1
+
+    /// Высота, на которую опускаются буквы во второй части анимации
+    var fallHeight: CGFloat = 20
+
     // MARK: - Private
     private var glyphs: [CALayer] = []
 
@@ -88,11 +97,8 @@ final class AnimatedStringLayer: CALayer {
     }
 
     private func animateLayer(layer: CALayer, index: Int) {
-        let param1: CGFloat = 30
-        let duration1: CFTimeInterval = 3
 
         layer.removeAllAnimations()
-
         var animations: [CAAnimation] = []
 
         let startTimeOffset = 0.05 * CFTimeInterval(index)
@@ -107,56 +113,37 @@ final class AnimatedStringLayer: CALayer {
         }
 
         let fromScale = CATransform3DMakeScale(0, 0, 1)
-        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1) 
+        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1)
 
         let animateScale = CABasicAnimation(keyPath: "transform")
         animateScale.fromValue = fromScale
         animateScale.toValue = toScale
         animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        animateScale.duration = duration1
+        animateScale.duration = appearDuration
         animateScale.beginTime = startTimeOffset
         animations.append(animateScale)
 
         let radius: CGFloat = CGFloat.random(in: 50 ... 200)
-        let position = CGPoint(x: layer.position.x, y: layer.position.y - param1)
+        let position = CGPoint(x: layer.position.x, y: layer.position.y - fallHeight)
         let path = CGMutablePath()
         path.addRelativeArc(center: CGPoint(x: position.x - radius, y: position.y), radius: radius, startAngle: .pi, delta: -CGFloat.pi)
 
         let animatePosition = CAKeyframeAnimation(keyPath: "position")
         animatePosition.path = path
         animatePosition.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        animatePosition.duration = duration1
+        animatePosition.duration = appearDuration
         animatePosition.rotationMode = .rotateAuto
         animatePosition.beginTime = startTimeOffset
         animations.append(animatePosition)
 
-        let duration2: CFTimeInterval = 2
-        let animateBounce = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + param1))
-        animateBounce.duration = duration2
-        animateBounce.beginTime = duration1 + startTimeOffset
+        let animateBounce = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + fallHeight))
+        animateBounce.duration = bounceDuration
+        animateBounce.beginTime = appearDuration + startTimeOffset
         animations.append(animateBounce)
 
         let group = CAAnimationGroup()
         group.animations = animations
-        group.duration = duration1 + duration2 + startTimeOffset
-        // group.timeOffset = -0.05 * CFTimeInterval(index)
-        //group.beginTime = 0.05 * CFTimeInterval(index)
-        //group.delegate = self
-
+        group.duration = appearDuration + bounceDuration + startTimeOffset
         layer.add(group, forKey: "animate")
-    }
-}
-
-extension AnimatedStringLayer: CAAnimationDelegate {
-
-    func animationDidStart(_ anim: CAAnimation) {
-//        if anim is CAAnimationGroup {
-//            for layer in glyphs {
-//                layer.transform = CATransform3DMakeScale(0, 0, 1)
-//            }
-//        }
-    }
-
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     }
 }
