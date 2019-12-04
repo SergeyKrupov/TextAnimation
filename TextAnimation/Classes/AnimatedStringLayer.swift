@@ -121,11 +121,12 @@ final class AnimatedStringLayer: CALayer {
         let duration2: CFTimeInterval = 2
         let animateSpring = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + param1))
         animateSpring.duration = duration2
-        animateSpring.beginTime   = duration1 + CFTimeInterval(index) * 0.05
+        animateSpring.beginTime = duration1
 
         let group = CAAnimationGroup()
         group.animations = [animateScale, animatePosition, animateSpring]
         group.duration = duration1 + duration2
+        group.timeOffset = -0.05 * CFTimeInterval(index)
 
         layer.add(group, forKey: "animate")
     }
