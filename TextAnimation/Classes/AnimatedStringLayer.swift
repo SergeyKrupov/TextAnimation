@@ -37,6 +37,9 @@ final class AnimatedStringLayer: CALayer {
     /// Высота, на которую опускаются буквы во второй части анимации
     var fallHeight: CGFloat = 20
 
+    /// Отставание анимации следующей буквы по отношению к предыдущей
+    var lagBetweenLetters = 0.07
+
     // MARK: - Private
     private var glyphs: [CALayer] = []
 
@@ -97,11 +100,10 @@ final class AnimatedStringLayer: CALayer {
     }
 
     private func animateLayer(layer: CALayer, index: Int) {
-
         layer.removeAllAnimations()
         var animations: [CAAnimation] = []
 
-        let startTimeOffset = 0.05 * CFTimeInterval(index)
+        let startTimeOffset = lagBetweenLetters * CFTimeInterval(index)
 
         if index > 0 {
             let dummyAnimation = CABasicAnimation(keyPath: "transform")
