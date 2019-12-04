@@ -20,6 +20,10 @@ final class AnimatedStringView: UIView {
         }
     }
 
+    func animate() {
+        stringLayer.animate()
+    }
+
     override class var layerClass: AnyClass {
         return AnimatedStringLayer.self
     }

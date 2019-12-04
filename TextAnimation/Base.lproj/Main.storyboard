@@ -54,15 +54,36 @@
                         <viewLayoutGuide key="safeArea" id="X6V-F6-5sX"/>
                     </view>
                     <navigationItem key="navigationItem" id="aC5-Eh-rtg">
-                        <barButtonItem key="rightBarButtonItem" title="Просмотр" id="dZI-y9-B84"/>
+                        <barButtonItem key="rightBarButtonItem" title="Просмотр" id="dZI-y9-B84">
+                            <connections>
+                                <action selector="previewClickAction:" destination="FXW-ZI-eUf" id="vYy-bd-jTx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="animatedStringView" destination="CB6-Ww-Db0" id="kXZ-MR-TY6"/>
+                        <segue destination="xyR-YY-KOk" kind="show" identifier="PresentEditor" id="kfR-iG-SM1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LEb-6j-23m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1979.7101449275365" y="-66.294642857142861"/>
+        </scene>
+        <!--Edit View Controller-->
+        <scene sceneID="yWq-5W-Xh0">
+            <objects>
+                <viewController id="xyR-YY-KOk" customClass="EditViewController" customModule="TextAnimation" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9fZ-x8-59C">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="PXx-gd-tAP"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4D2-di-mF1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZuH-vB-860" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2836" y="-66"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kH4-fK-vEA">

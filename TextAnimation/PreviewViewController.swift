@@ -14,10 +14,29 @@ final class PreviewViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         animatedStringView.text = "Foo-Bar"
+        animatedStringView.addGestureRecognizer(doubleTapRecognizer)
     }
     
+    @IBAction func previewClickAction(_ sender: Any) {
+        animatedStringView.animate()
+    }
+
+    // MARK: - Private
+    private lazy var doubleTapRecognizer: UITapGestureRecognizer = {
+        let recognizer = UITapGestureRecognizer()
+        recognizer.numberOfTapsRequired = 2
+        recognizer.addTarget(self, action: #selector(doubleTapRecognizerAction(_:)))
+        return recognizer
+    }()
+
+    @objc
+    private func doubleTapRecognizerAction(_ recognizer :UITapGestureRecognizer) {
+        guard recognizer.state == .recognized else {
+            return
+        }
+        performSegue(withIdentifier: "PresentEditor", sender: self)
+    }
 
     /*
     // MARK: - Navigation
