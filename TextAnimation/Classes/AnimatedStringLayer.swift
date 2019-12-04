@@ -93,6 +93,30 @@ final class AnimatedStringLayer: CALayer {
 
         layer.removeAllAnimations()
 
+        var animations: [CAAnimation] = []
+
+        let startTimeOffset = 0.05 * CFTimeInterval(index)
+
+        if index > 0 {
+            let dummyAnimation = CABasicAnimation(keyPath: "transform")
+            dummyAnimation.fromValue = CATransform3DMakeScale(0, 0, 1)
+            dummyAnimation.toValue = CATransform3DMakeScale(0, 0, 1)
+            dummyAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            dummyAnimation.duration = startTimeOffset
+            animations.append(dummyAnimation)
+        }
+
+        let fromScale = CATransform3DMakeScale(0, 0, 1)
+        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1) 
+
+        let animateScale = CABasicAnimation(keyPath: "transform")
+        animateScale.fromValue = fromScale
+        animateScale.toValue = toScale
+        animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animateScale.duration = duration1
+        animateScale.beginTime = startTimeOffset
+        animations.append(animateScale)
+
         let radius: CGFloat = CGFloat.random(in: 50 ... 200)
         let position = CGPoint(x: layer.position.x, y: layer.position.y - param1)
         let path = CGMutablePath()
@@ -103,26 +127,36 @@ final class AnimatedStringLayer: CALayer {
         animatePosition.timingFunction = CAMediaTimingFunction(name: .easeOut)
         animatePosition.duration = duration1
         animatePosition.rotationMode = .rotateAuto
-
-        let fromScale = CATransform3DMakeScale(0, 0, 1)
-        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1) //CATransform3DIdentity
-
-        let animateScale = CABasicAnimation(keyPath: "transform")
-        animateScale.fromValue = fromScale
-        animateScale.toValue = toScale
-        animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        animateScale.duration = duration1
+        animatePosition.beginTime = startTimeOffset
+        animations.append(animatePosition)
 
         let duration2: CFTimeInterval = 2
-        let animateSpring = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + param1))
-        animateSpring.duration = duration2
-        animateSpring.beginTime = duration1
+        let animateBounce = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + param1))
+        animateBounce.duration = duration2
+        animateBounce.beginTime = duration1 + startTimeOffset
+        animations.append(animateBounce)
 
         let group = CAAnimationGroup()
-        group.animations = [animateScale, animatePosition, animateSpring]
-        group.duration = duration1 + duration2
-        group.timeOffset = -0.05 * CFTimeInterval(index)
+        group.animations = animations
+        group.duration = duration1 + duration2 + startTimeOffset
+        // group.timeOffset = -0.05 * CFTimeInterval(index)
+        //group.beginTime = 0.05 * CFTimeInterval(index)
+        //group.delegate = self
 
         layer.add(group, forKey: "animate")
+    }
+}
+
+extension AnimatedStringLayer: CAAnimationDelegate {
+
+    func animationDidStart(_ anim: CAAnimation) {
+//        if anim is CAAnimationGroup {
+//            for layer in glyphs {
+//                layer.transform = CATransform3DMakeScale(0, 0, 1)
+//            }
+//        }
+    }
+
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
     }
 }
