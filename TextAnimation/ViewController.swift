@@ -111,6 +111,33 @@ class ViewController: UIViewController {
             view.layer.addSublayer(layer)
         }
 
+        for layer in layers {
+            animate1(layer: layer)
+        }
+    }
+
+    private func animate1(layer: CALayer) {
+        let group = CAAnimationGroup()
+
+        let fromRotation = CATransform3DMakeRotation(CGFloat.pi / 3, 0, 0, 1)
+        let toRotation = CATransform3DMakeRotation(0, 0, 0, 1)
+        let rotate = CABasicAnimation(keyPath: "transform")
+        rotate.fromValue = fromRotation
+        rotate.toValue = toRotation
+        rotate.duration = 1.0
+
+        let fromScale = CATransform3DMakeScale(0, 0, 1)
+        let toScale = CATransform3DMakeScale(1, 1, 1)
+
+        let scale = CABasicAnimation(keyPath: "transform")
+        scale.fromValue = fromScale
+        scale.toValue = toScale
+        scale.duration = 1.0
+
+        group.animations = [scale, rotate]
+        group.duration = 5
+
+        layer.add(group, forKey: "animate1")
     }
 }
 
