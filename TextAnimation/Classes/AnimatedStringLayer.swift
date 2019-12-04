@@ -22,6 +22,12 @@ final class AnimatedStringLayer: CALayer {
         }
     }
 
+    func animate() {
+        for (offset, glyph) in glyphs.enumerated() {
+            animateLayer(layer: glyph.layer, index: offset)
+        }
+    }
+
     // MARK: - Private
     private struct Glyph {
         let layer: GlyphLayer
@@ -84,5 +90,43 @@ final class AnimatedStringLayer: CALayer {
             glyphs.append(Glyph(layer: layer, frame: layer.frame))
         }
         bounds.size = boundingRect.size
+    }
+
+    private func animateLayer(layer: CALayer, index: Int) {
+        let param1: CGFloat = 30
+        let duration1: CFTimeInterval = 3
+
+        layer.removeAllAnimations()
+
+        let radius: CGFloat = CGFloat.random(in: 50 ... 200)
+        let position = CGPoint(x: layer.position.x, y: layer.position.y - param1)
+        let path = CGMutablePath()
+        path.addRelativeArc(center: CGPoint(x: position.x - radius, y: position.y), radius: radius, startAngle: .pi, delta: -CGFloat.pi)
+
+        let animatePosition = CAKeyframeAnimation(keyPath: "position")
+        animatePosition.path = path
+        animatePosition.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animatePosition.duration = duration1
+        animatePosition.rotationMode = .rotateAuto
+
+        let fromScale = CATransform3DMakeScale(0, 0, 1)
+        let toScale = CATransform3DMakeRotation(.pi / 2, 0, 0, 1) //CATransform3DIdentity
+
+        let animateScale = CABasicAnimation(keyPath: "transform")
+        animateScale.fromValue = fromScale
+        animateScale.toValue = toScale
+        animateScale.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animateScale.duration = duration1
+
+        let duration2: CFTimeInterval = 2
+        let animateSpring = BouncePositionAnimation(fromValue: position, toValue: CGPoint(x: position.x, y: position.y + param1))
+        animateSpring.duration = duration2
+        animateSpring.beginTime   = duration1 + CFTimeInterval(index) * 0.05
+
+        let group = CAAnimationGroup()
+        group.animations = [animateScale, animatePosition, animateSpring]
+        group.duration = duration1 + duration2
+
+        layer.add(group, forKey: "animate")
     }
 }

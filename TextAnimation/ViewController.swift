@@ -55,20 +55,24 @@ func createGlyphLayers(text: String, font: CTFont) -> [GlyphLayer] {
 class ViewController: UIViewController {
 
     @IBAction func start(_ sender: Any) {
-        let layers = view.layer.sublayers?.compactMap { $0 as? GlyphLayer } ?? []
-        for (offset, layer) in layers.enumerated() {
-            animate1(layer: layer, index: offset)
-        }
+        animatedString.animate()
+//        let layers = view.layer.sublayers?.compactMap { $0 as? GlyphLayer } ?? []
+//        for (offset, layer) in layers.enumerated() {
+//            animate1(layer: layer, index: offset)
+//        }
     }
+
+    private lazy var animatedString: AnimatedStringLayer = {
+        let layer = AnimatedStringLayer()
+        layer.text = "Blah-blah-blah😎"
+        layer.frame.origin = CGPoint(x: 20, y: 200)
+
+        return layer
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let layer = AnimatedStringLayer()
-        layer.text = "Blah-blah-blah😎"
-        view.layer.addSublayer(layer)
-
-        layer.frame.origin = CGPoint(x: 100, y: 100)
+        view.layer.addSublayer(animatedString)
         // Do any additional setup after loading the view.
     }
 
@@ -95,15 +99,13 @@ class ViewController: UIViewController {
 
         let position = CGPoint(x: (view.bounds.width - rect.width) / 2, y: (view.bounds.height - rect.height) / 2)
 
-        for layer in layers {
-            let frame = layer.frame
-            layer.frame = CGRect(x: position.x + frame.minX, y: position.y + rect.height - frame.height, width: frame.width, height: frame.height)
-            view.layer.addSublayer(layer)
-        }
-
 //        for layer in layers {
-//            animate1(layer: layer)
+//            let frame = layer.frame
+//            layer.frame = CGRect(x: position.x + frame.minX, y: position.y + rect.height - frame.height, width: frame.width, height: frame.height)
+//            view.layer.addSublayer(layer)
 //        }
+
+
     }
 
     private func animate1(layer: CALayer, index: Int) {
