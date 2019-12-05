@@ -91,12 +91,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="PXx-gd-tAP"/>
                     </view>
-                    <navigationItem key="navigationItem" id="4D2-di-mF1"/>
+                    <navigationItem key="navigationItem" id="4D2-di-mF1">
+                        <barButtonItem key="rightBarButtonItem" title="Применить" id="m1A-Vn-r9b">
+                            <connections>
+                                <segue destination="rTD-8F-4cY" kind="unwind" unwindAction="unwindToPreview:" id="34Y-Pi-kOc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="textField" destination="0h7-ZQ-5MQ" id="VGV-OQ-QJn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuH-vB-860" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="rTD-8F-4cY" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2836" y="-66"/>
         </scene>

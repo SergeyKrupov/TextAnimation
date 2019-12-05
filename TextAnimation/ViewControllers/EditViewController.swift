@@ -8,12 +8,7 @@
 
 import UIKit
 
-protocol EditorViewControllerProtocol {
-
-    func setText(_ text: String?)
-}
-
-final class EditViewController: UIViewController, EditorViewControllerProtocol {
+final class EditViewController: UIViewController, TextSettable {
 
     // MARK: - Outlets
     @IBOutlet private var textField: UITextField!
@@ -24,7 +19,7 @@ final class EditViewController: UIViewController, EditorViewControllerProtocol {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? PreviewViewControllerProtocol {
+        if let destination = segue.destination as? TextSettable {
             destination.setText(textField.text)
         }
     }
