@@ -11,7 +11,6 @@
 		A54A6EA02397D9720002E62B /* AnimatedStringLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A6E9F2397D9720002E62B /* AnimatedStringLayer.swift */; };
 		A54A6EA22397DFC60002E62B /* BouncePositionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */; };
 		A565D41F2396AEE8001F7BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565D41E2396AEE8001F7BFE /* AppDelegate.swift */; };
-		A565D4212396AEE8001F7BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A565D4202396AEE8001F7BFE /* ViewController.swift */; };
 		A565D4242396AEE8001F7BFE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A565D4222396AEE8001F7BFE /* Main.storyboard */; };
 		A565D4262396AEE9001F7BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A565D4252396AEE9001F7BFE /* Assets.xcassets */; };
 		A565D4292396AEE9001F7BFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A565D4272396AEE9001F7BFE /* LaunchScreen.storyboard */; };
@@ -38,7 +37,6 @@
 		A54A6EA12397DFC60002E62B /* BouncePositionAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BouncePositionAnimation.swift; sourceTree = "<group>"; };
 		A565D41B2396AEE8001F7BFE /* TextAnimation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextAnimation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A565D41E2396AEE8001F7BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		A565D4202396AEE8001F7BFE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A565D4232396AEE8001F7BFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A565D4252396AEE9001F7BFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A565D4282396AEE9001F7BFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 				A57D82AF2398103B00832851 /* ViewControllers */,
 				A54A6E992397D6020002E62B /* Classes */,
 				A565D41E2396AEE8001F7BFE /* AppDelegate.swift */,
-				A565D4202396AEE8001F7BFE /* ViewController.swift */,
 				A565D4252396AEE9001F7BFE /* Assets.xcassets */,
 				A565D4272396AEE9001F7BFE /* LaunchScreen.storyboard */,
 				A565D42A2396AEE9001F7BFE /* Info.plist */,
@@ -245,7 +242,6 @@
 				A57D82AE23980EE600832851 /* EditViewController.swift in Sources */,
 				A54A6EA22397DFC60002E62B /* BouncePositionAnimation.swift in Sources */,
 				A54A6E9C2397D61E0002E62B /* GlyphLayer.swift in Sources */,
-				A565D4212396AEE8001F7BFE /* ViewController.swift in Sources */,
 				A589CC9E2398C4B200690331 /* TextSettable.swift in Sources */,
 				A565D41F2396AEE8001F7BFE /* AppDelegate.swift in Sources */,
 				A54A6EA02397D9720002E62B /* AnimatedStringLayer.swift in Sources */,

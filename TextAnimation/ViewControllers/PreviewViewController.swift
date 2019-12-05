@@ -16,7 +16,7 @@ final class PreviewViewController: UIViewController, TextSettable {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        animatedStringView.text = "Foo-Bar"
+        animatedStringView.text = "Hello, world!🤘😎"
         animatedStringView.addGestureRecognizer(doubleTapRecognizer)
         animatedStringView.addGestureRecognizer(panRecognizer)
     }
