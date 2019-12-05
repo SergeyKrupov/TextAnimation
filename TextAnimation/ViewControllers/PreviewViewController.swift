@@ -26,7 +26,7 @@ final class PreviewViewController: UIViewController, PreviewViewControllerProtoc
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.description as? EditorViewControllerProtocol {
+        if let destination = segue.destination as? EditorViewControllerProtocol {
             destination.setText(animatedStringView.text)
         }
     }
