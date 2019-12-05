@@ -92,7 +92,7 @@ final class AnimatedStringLayer: CALayer {
         boundingRect = layers.reduce(boundingRect) { $0.union($1.frame) }
         for layer in layers {
             let frame = layer.frame
-            layer.frame = CGRect(x: frame.minX, y: boundingRect.maxY - frame.height, width: frame.width, height: frame.height)
+            layer.frame = CGRect(x: frame.minX, y: boundingRect.maxY - (frame.maxY - boundingRect.minY), width: frame.width, height: frame.height)
             addSublayer(layer)
             glyphs.append(layer)
         }
