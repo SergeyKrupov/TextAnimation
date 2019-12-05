@@ -20,8 +20,8 @@ final class AnimatedStringView: UIView {
         }
     }
 
-    func animate() {
-        stringLayer.animate()
+    func animate(repeatCount: Int) {
+        stringLayer.animate(repeatCount: repeatCount)
     }
 
     override class var layerClass: AnyClass {

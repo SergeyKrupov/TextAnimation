@@ -29,7 +29,7 @@ final class PreviewViewController: UIViewController, TextSettable {
 
     // MARK: - Action
     @IBAction func previewClickAction(_ sender: Any) {
-        animatedStringView.animate()
+        animatedStringView.animate(repeatCount: 3)
     }
 
     @IBAction func unwindToPreview(_ segue: UIStoryboardSegue) {

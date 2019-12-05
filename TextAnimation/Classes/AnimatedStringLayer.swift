@@ -22,9 +22,9 @@ final class AnimatedStringLayer: CALayer {
         }
     }
 
-    func animate() {
+    func animate(repeatCount: Int = 1) {
         for (offset, layer) in glyphs.reversed().enumerated() {
-            animateLayer(layer: layer, index: offset, count: glyphs.count)
+            animateLayer(layer: layer, index: offset, count: glyphs.count, repeatCount: repeatCount)
         }
     }
 
@@ -99,7 +99,7 @@ final class AnimatedStringLayer: CALayer {
         bounds.size = boundingRect.size
     }
 
-    private func animateLayer(layer: CALayer, index: Int, count: Int) {
+    private func animateLayer(layer: CALayer, index: Int, count: Int, repeatCount: Int) {
         layer.removeAllAnimations()
         var animations: [CAAnimation] = []
 
@@ -152,7 +152,7 @@ final class AnimatedStringLayer: CALayer {
         let group = CAAnimationGroup()
         group.animations = animations
         group.duration = appearDuration + bounceDuration + lagBetweenLetters * CFTimeInterval(count - 1)
-        group.repeatDuration = 10
+        group.repeatCount = Float(repeatCount)
         layer.add(group, forKey: "animate")
     }
 }
