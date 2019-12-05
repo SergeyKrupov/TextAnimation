@@ -24,7 +24,7 @@ final class AnimatedStringLayer: CALayer {
 
     func animate() {
         for (offset, layer) in glyphs.reversed().enumerated() {
-            animateLayer(layer: layer, index: offset)
+            animateLayer(layer: layer, index: offset, count: glyphs.count)
         }
     }
 
@@ -99,7 +99,7 @@ final class AnimatedStringLayer: CALayer {
         bounds.size = boundingRect.size
     }
 
-    private func animateLayer(layer: CALayer, index: Int) {
+    private func animateLayer(layer: CALayer, index: Int, count: Int) {
         layer.removeAllAnimations()
         var animations: [CAAnimation] = []
 
@@ -109,7 +109,6 @@ final class AnimatedStringLayer: CALayer {
             let dummyAnimation = CABasicAnimation(keyPath: "transform")
             dummyAnimation.fromValue = CATransform3DMakeScale(0, 0, 1)
             dummyAnimation.toValue = CATransform3DMakeScale(0, 0, 1)
-            dummyAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
             dummyAnimation.duration = startTimeOffset
             animations.append(dummyAnimation)
         }
@@ -143,9 +142,17 @@ final class AnimatedStringLayer: CALayer {
         animateBounce.beginTime = appearDuration + startTimeOffset
         animations.append(animateBounce)
 
+        if index + 1 < count {
+            let dummyAnimation = CABasicAnimation()
+            dummyAnimation.beginTime = appearDuration + startTimeOffset + bounceDuration
+            dummyAnimation.duration = lagBetweenLetters * CFTimeInterval(count - 1 - index)
+            animations.append(dummyAnimation)
+        }
+
         let group = CAAnimationGroup()
         group.animations = animations
-        group.duration = appearDuration + bounceDuration + startTimeOffset
+        group.duration = appearDuration + bounceDuration + lagBetweenLetters * CFTimeInterval(count - 1)
+        group.repeatDuration = 10
         layer.add(group, forKey: "animate")
     }
 }
